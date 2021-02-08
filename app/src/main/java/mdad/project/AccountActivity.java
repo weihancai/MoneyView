@@ -234,13 +234,18 @@ public class AccountActivity extends AppCompatActivity {
                     for(int i = 0; i<jsonArray.length(); i++){
                         JSONObject object = jsonArray.getJSONObject(i);
                         String accountname = object.getString("accountname");
+                        String transactiondetails = object.getString("transactiondetails");
                         String transactionamount = object.getString("transactionamount");
                         String userid = object.getString("userid");
                         if(prf.getString("userid", null).equals(userid)) {
                             //arrayList.add("[" + created_at + "] " + "(" + transactiondetails + ") " + categoryname + "   $" + transactionamount + " (" + transactionnote + ")");
                             for(int j = 0; j < arrayAccount.size(); j++){
                                 if(arrayAccount.get(j).equals(accountname)){
-                                    accountValueArr[j] = accountValueArr[j] + Double.parseDouble(transactionamount);
+                                    if(transactiondetails.equals("Income")) {
+                                        accountValueArr[j] = accountValueArr[j] + Double.parseDouble(transactionamount);
+                                    }else if(transactiondetails.equals("Expense")){
+                                        accountValueArr[j] = accountValueArr[j] - Double.parseDouble(transactionamount);
+                                    }
                                 }
                             }
                         }
